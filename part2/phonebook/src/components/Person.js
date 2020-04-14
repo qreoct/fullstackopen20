@@ -1,10 +1,11 @@
 import React from 'react'
 
 const Person = (props) => {
-  const {name,number} = props
+  const {name,number,handleDel} = props
   return(
   	<div>
-      <p> {name}, {number} </p> 
+      <span> {name}, {number} </span> 
+      <button onClick = {handleDel} > delete </button>
     </div>
   )
 }
