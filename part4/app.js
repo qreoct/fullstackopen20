@@ -3,7 +3,9 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const blogsRouter = require('./controllers/blogs.js')
+const blogsRouter = require('./controllers/blogs.js') // <- important! here the router is defined
+const usersRouter = require('./controllers/users.js')
+const loginRouter = require('./controllers/login.js')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -21,8 +23,11 @@ app.use(cors()) // allow cross origin reference to ensure local requests work
 app.use(express.static('build')) // handle all GET req to '/' to serve from build directory instead
 app.use(express.json()) // allow json parsing
 app.use(middleware.requestLogger) // run our middleware that handles logging requests (like morgan)
+app.use(middleware.tokenExtractor)
 
 app.use('/api/blogs', blogsRouter) // the blogsRouter is only used if the url of the request beings with '/api/blogs'
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint) // our middleware for 404/unknown requests
 app.use(middleware.errorHandler) // our middleware for handling errors

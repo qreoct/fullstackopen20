@@ -7,11 +7,19 @@ const helper = require('./test_helper')
 const Blog = require('../models/blog')
 
 beforeEach(async () => {
+	//create blogs
 	await Blog.deleteMany({})
 
 	const blogObjects = helper.initialBlogs.map(b => new Blog(b))
-	const promiseArray = blogObjects.map(b => b.save())
-	await Promise.all(promiseArray)
+	const promiseArrayB = blogObjects.map(b => b.save())
+	await Promise.all(promiseArrayB)
+
+	//create users
+	await User.deleteMany({})
+
+	const userObjects = helper.initialUsers.map(u => new User(u))
+	const promiseArrayU = userObjects.map(u => u.save())
+	await Promise.all(promiseArrayU)
 })
 
 describe('checking state of initial blogs', () => {
@@ -41,6 +49,13 @@ describe('creating new blogs', () => {
 			url:'testing',
 			likes: 25
 		}
+		const login = await api
+				.post('/api/login')
+				.set('Accept', 'application/json')
+				.send({'username': 'root', 'password': 'superman'})
+				.expect(200)
+		console.log('============= testing login', login.token)
+
 		await api
 			.post('/api/blogs')
 			.send(myBlog)
