@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const bcrypt = require('bcrypt')
 const app = require('../app')
 const api = supertest(app)
 
 const helper = require('./test_helper')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 beforeEach(async () => {
 	//create blogs
@@ -13,13 +15,6 @@ beforeEach(async () => {
 	const blogObjects = helper.initialBlogs.map(b => new Blog(b))
 	const promiseArrayB = blogObjects.map(b => b.save())
 	await Promise.all(promiseArrayB)
-
-	//create users
-	await User.deleteMany({})
-
-	const userObjects = helper.initialUsers.map(u => new User(u))
-	const promiseArrayU = userObjects.map(u => u.save())
-	await Promise.all(promiseArrayU)
 })
 
 describe('checking state of initial blogs', () => {
@@ -42,6 +37,23 @@ describe('checking state of initial blogs', () => {
 })
 
 describe('creating new blogs', () => {
+	let headers
+	// need to create a user
+	beforeEach(async () => {
+		User.deleteMany({})
+		const newUser = {
+			username:'gigabyte',
+			name:'big data',
+			password:'megabyte'
+		}
+		user = await api.post('/api/users').send(newUser)
+		const login = await api.post('/api/login').send(newUser)
+
+		headers = {
+			'Authorization': `bearer ${login.body.token}`
+		}
+	})
+
 	test('making a HTTP POST req', async () => {
 		const myBlog = {
 			title:'lol',
@@ -49,16 +61,11 @@ describe('creating new blogs', () => {
 			url:'testing',
 			likes: 25
 		}
-		const login = await api
-				.post('/api/login')
-				.set('Accept', 'application/json')
-				.send({'username': 'root', 'password': 'superman'})
-				.expect(200)
-		console.log('============= testing login', login.token)
 
 		await api
 			.post('/api/blogs')
 			.send(myBlog)
+			.set(headers)
 		    .expect(201)
 		    .expect('Content-Type', /application\/json/)
 
@@ -85,6 +92,7 @@ describe('creating new blogs', () => {
 		const res = await api
 			.post('/api/blogs')
 			.send(myBlog)
+			.set(headers)
 		    .expect(201)
 		    .expect('Content-Type', /application\/json/)
 		expect(res.body.likes).toBe(0)
@@ -104,19 +112,62 @@ describe('creating new blogs', () => {
 })
 
 describe('deleting and PUTting blogs', () => {
-	test('deleting gives status 204 if id valid', async () => {
+	let headers
+	// need to create a user
+	beforeEach(async () => {
+		User.deleteMany({})
+		const newUser = {
+			username:'gigabyte',
+			name:'big data',
+			password:'megabyte'
+		}
+		user = await api.post('/api/users').send(newUser)
+		const login = await api.post('/api/login').send(newUser)
+
+		headers = {
+			'Authorization': `bearer ${login.body.token}`
+		}
+	})
+
+	test('deleting succeeds 204 if id & token valid', async () => {
+		const user = await User.find({username: 'gigabyte'})
+		const userid = user.id
+
+		const myBlog = {
+			title:'deleteme',
+			author:'deleteme',
+			url:'deleteme',
+		}
+		await api.post('/api/blogs').send(myBlog).set(headers).expect(201)
+		const blogsAtStart = await helper.blogsInDb()
+		const blogToDel = blogsAtStart[blogsAtStart.length-1]
+
+		const res = await api
+			.delete(`/api/blogs/${blogToDel.id}`)
+			.set(headers)
+			.expect(204)
+
+		console.log(res.error)
+
+		const blogsAtEnd = await helper.blogsInDb()
+		expect(blogsAtEnd).toHaveLength(blogsAtStart.length-1)
+
+		const titles = blogsAtEnd.map(b => b.title)
+		expect(titles).not.toContain(blogToDel.title)
+	})
+
+	test('deleting not authorized (401) if token invalid', async () => {
 		const blogsAtStart = await helper.blogsInDb()
 		const blogToDel = blogsAtStart[0]
 
 		await api
 			.delete(`/api/blogs/${blogToDel.id}`)
-			.expect(204)
+			.expect(401)
 
 		const blogsAtEnd = await helper.blogsInDb()
-		expect(blogsAtEnd).toHaveLength(blogsAtStart.length - 1)
+		expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
 
 		const titles = blogsAtEnd.map(b => b.title)
-		expect(titles).not.toContain(blogToDel.title)
 	})
 
 	test('PUTting does change the number of likes', async () => {
@@ -132,7 +183,6 @@ describe('deleting and PUTting blogs', () => {
 
 		const blogsAtEnd = await helper.blogsInDb()
 		expect(blogsAtEnd[0].likes).not.toBe(blogsAtStart[0].likes)
-
 	})
 })
 

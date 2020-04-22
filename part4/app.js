@@ -20,7 +20,6 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 	})
 
 app.use(cors()) // allow cross origin reference to ensure local requests work
-app.use(express.static('build')) // handle all GET req to '/' to serve from build directory instead
 app.use(express.json()) // allow json parsing
 app.use(middleware.requestLogger) // run our middleware that handles logging requests (like morgan)
 app.use(middleware.tokenExtractor)

@@ -35,9 +35,10 @@ describe('user creation', () => {
 			name:'clark kent',
 			password:'secret'
 		}
-		await api.post('/api/users')
+		const res = await api.post('/api/users')
 			.send(newUser)
-			.expect(500)
+			.expect(400)
+		console.log(res.body.error)
 
 		const usersAtEnd = await helper.usersInDb()
 		console.log(usersAtEnd)
@@ -70,7 +71,39 @@ describe('user creation', () => {
 		expect(usersAtEnd).toHaveLength(helper.initialUsers.length)
 	})
 })
-
+describe('user login', () => {
+	test('make user and login', async () => {
+		const newUser = {
+			username:'gigabyte',
+			name:'big data',
+			password:'megabyte'
+		}
+		user = await api.post('/api/users').send(newUser)
+		login = await api.post('/api/login').send(newUser)
+	})
+	test('post req login with correct credentials', async () => {
+		const newUser = {
+			username:'gigabyte',
+			name:'big data',
+			password:'megabyte'
+		}
+		user = await api.post('/api/users').send(newUser)
+		login = await api.post('/api/login').send(newUser)
+			.expect(200)
+		expect(login.body.token).toBeDefined()
+	})
+	test('post req login incorrect credentials', async () => {
+		const newUser = {
+			username:'gigabyte',
+			name:'big data',
+			password:'megabyte'
+		}
+		user = await api.post('/api/users').send(newUser)
+		login = await api.post('/api/login').send({username:'gigabyte', password:'fan'})
+			.expect(401)
+		expect(login.body.token).toBeUndefined()
+	})
+})
 
 afterAll(() => {
   mongoose.connection.close()
