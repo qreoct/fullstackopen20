@@ -1,0 +1,59 @@
+.blogwrapper{
+	background-color: #ddd;
+	border-color: black;
+	padding:20px;
+	margin:10px;
+	border-radius:5px;
+	max-width: 250px;
+	list-style-position: inside;
+}
+.blogwrapper:hover{
+	background-color:#eeeeee;
+	transition:0.25s;
+}
+
+.blogtitle{
+	color:black;
+	font-weight:800;
+	font-size:1.4em;
+}
+.blogtitle:hover{
+	color:navy;
+	transition: 0.2s;
+}
+
+.bloglikes{
+	padding:10px;
+	background-color: limegreen;
+	color:white;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.blogmaximise{
+	cursor:pointer;
+	background-color:orange;
+	border-radius: 50%;
+	width:20px;
+	height:20px;
+	margin-top:-15px;
+	margin-left:0;
+	margin-right:-15px;
+	float:right;
+	text-align:center;
+	font-family:sans-serif;
+}
+
+.blogdelete{
+	cursor:pointer;
+	background-color:red;
+	border-radius: 50%;
+	width:20px;
+	height:20px;
+	margin-top:10px;
+	margin-left:0;
+	margin-right:-20px;
+	float:right;
+	text-align:center;
+	font-family:sans-serif;
+}
