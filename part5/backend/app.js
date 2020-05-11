@@ -28,6 +28,11 @@ app.use('/api/blogs', blogsRouter) // the blogsRouter is only used if the url of
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
+if (process.env.NODE_ENV === 'test') { 
+	const testingRouter = require('./controllers/testing')
+	app.use('/api/testing', testingRouter) 
+}
+
 app.use(middleware.unknownEndpoint) // our middleware for 404/unknown requests
 app.use(middleware.errorHandler) // our middleware for handling errors
 

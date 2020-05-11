@@ -13,8 +13,8 @@ const User = (props) => {
 
   return(
   <>
-  <span onClick={handleId}> user: {username} </span>
-  {showId? <p><em> id: {id} </em></p>: <></>}
+  <span onClick={handleId} className='username'> user: {username} </span>
+  {showId? <p className='id'><em> id: {id} </em></p>: <></>}
   </>
   )
 }

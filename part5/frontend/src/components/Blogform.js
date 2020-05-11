@@ -39,11 +39,11 @@ const Blogform = (props) => {
 
 		<div style={showWhenVisible}>
 		<h3> Submit new blog </h3>
-		Title: <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/> <br />
-		Author: <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)}/> <br />
-		Url: <input type="url" value={url} onChange={(e) => setUrl(e.target.value)}/> <br />
-		Likes: <input type="text" value={likes} onChange={(e) => setLikes(e.target.value)}/> <br />
-		<input type="submit" value="create" onClick={create} />
+		Title: <input type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)}/> <br />
+		Author: <input type="text" id="author" value={author} onChange={(e) => setAuthor(e.target.value)}/> <br />
+		Url: <input type="url" id="url" value={url} onChange={(e) => setUrl(e.target.value)}/> <br />
+		Likes: <input type="text" id="likes" value={likes} onChange={(e) => setLikes(e.target.value)}/> <br />
+		<input type="submit" id="newblog-btn" value="create" onClick={create} />
 		<input type="submit" value="cancel" onClick={toggleVisible} />
 		</div>
 	</div>

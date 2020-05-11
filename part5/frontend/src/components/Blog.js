@@ -14,7 +14,9 @@ const Blog = ({ blog, likeHandler, delHandler }) => {
 	const hideWhenVisible = { display: visible? 'none': ''}
 
 	const loggedIn = JSON.parse(window.localStorage.getItem('loggedInBlogUser'))
-	const currUser = loggedIn.username === blog.user.username ? true : false
+	console.log(loggedIn)
+	console.log(blog)
+	const currUser = (loggedIn && (loggedIn.username === blog.user.username)) ? true : false
 
 	return(
 	  <div className="blogwrapper">
@@ -28,7 +30,7 @@ const Blog = ({ blog, likeHandler, delHandler }) => {
 	  </a>
 	  <p> <span onClick={() => likeHandler(blog.id)} className="bloglikes"> &#8679; {blog.likes} </span> </p>
 
-	  <div style={hideWhenVisible}>
+	  <div style={hideWhenVisible} className="blogauthoruser">
 	  Author: {blog.author} <br/>
 	  Posted by <User user={blog.user}/>
 	  </div>

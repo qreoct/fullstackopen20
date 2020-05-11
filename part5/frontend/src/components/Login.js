@@ -9,9 +9,9 @@ const Login = (props) => {
 	return(
 	<div>
 	<h2> Please log in to application </h2>
-	Username: <input type="text" onChange={userHandler}/> <br />
-	Password: <input type="password" onChange={pwHandler}/>  <br />
-	<button onClick={loginHandler}> Login </button>
+	Username: <input id="user" type="text" onChange={userHandler}/> <br />
+	Password: <input id="pw" type="password" onChange={pwHandler}/>  <br />
+	<button id="login-btn" onClick={loginHandler}> Login </button>
 	</div>
 )}
 
