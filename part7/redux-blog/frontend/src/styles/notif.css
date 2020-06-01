@@ -1,0 +1,81 @@
+.notif_content {
+  font-size:18px;
+  padding-left:24px;
+}
+
+.notification {
+  border: solid;
+  padding: 15px;
+  max-width: 30%;
+  background: linear-gradient(150deg, 
+    rgb(122, 114, 236),
+    rgb(104, 209, 188));
+  border-radius: 5px;
+  border: #000;
+  color: white;
+  position: relative;
+}
+
+.notification:after{
+  border: 2px solid black;
+  margin-left: 5px;
+  z-index: -5;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: -20px;
+  right: -20px;
+  border-radius: 5px;
+}
+
+.notification_err {
+  border: solid;
+  padding: 15px;
+  max-width: 30%;
+  background-color: firebrick;
+  border-radius: 5px;
+  color: white;
+  position: relative;
+}
+.notification_err:after{
+  border: 2px solid darkred;
+  margin-left: 5px;
+  z-index: -5;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: -20px;
+  right: -20px;
+  border-radius: 5px;
+}
+
+
+.notification_success {
+  border: solid;
+  padding: 15px;
+  max-width: 30%;
+  background: linear-gradient(150deg, 
+    rgb(65, 222, 118),
+    rgb(54, 209, 138));
+  border-radius: 5px;
+  color: white;
+  position: relative;
+}
+.notification_success:after{
+  border: 2px solid yellowgreen;
+  margin-left: 5px;
+  z-index: -5;
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: -20px;
+  right: -20px;
+  border-radius: 5px;
+}
+
+.notification_hidden {
+  display: none;
+}

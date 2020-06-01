@@ -1,0 +1,29 @@
+tr:nth-child(2n) { 
+  background-color: #eee;
+}
+
+td>a {
+	text-decoration: none;
+	transition: all 0.3s;
+	font-size:1.2em;
+	color:forestgreen;
+}
+
+td {
+	padding: 0 0.5em 0.5em 0;
+}
+
+a:hover{
+	color: darkblue;
+}
+
+tr:hover{
+	background-color: rgba(0,255,0,0.1);
+}
+
+ul>li>a{
+	text-decoration: none;
+	transition: all 0.3s;
+	font-size:1.2em;
+	color:salmon;
+}
