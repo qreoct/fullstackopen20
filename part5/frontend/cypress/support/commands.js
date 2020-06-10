@@ -26,7 +26,8 @@ Cypress.Commands.add("newBlog", ({title, author, url, likes}) => {
     	},
     	body: {
 		title, author, url, likes
-		}})
+		}
+	})
 	cy.visit('http://localhost:3000/')
 })
 //

@@ -1,6 +1,6 @@
 # Using Redux
 
-Redux is a way to segregate all the different State changes and handlers we had in pure React. By using a 'reducer', we can route all the different 'actions' (i.e. state changes) and respective functionality into its own component separate from React Components. We also have an overall store that manages the state change.
+Redux is a way to segregate all the different State changes and handlers we had in pure React. By using a 'reducer', we can route all the different 'actions' (i.e. state changes) and respective functionality into its own component separate from React Components. We also have an overall store that manages state changes.
 
 That way, we can be a bit more independent with the Components themselves when -- having to call State Change Handlers in the past -- now we can simply use dispatch() to call the action.
 
