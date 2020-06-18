@@ -7,6 +7,7 @@ I learnt about React and how to write a Node server with Express and a REST API 
 Pretty good course! I really enjoyed it, and recommend it if you want to learn fullstack development with the MERN stack.
 
 ![Screenshot of part 7 exercise: redux-blog](./image.jpg)
+
 *Screenshot of part 7 exercise: an application with user login, redux, and simple POST actions*
 
 ## Running the code
